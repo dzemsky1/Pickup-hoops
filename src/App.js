@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
 
@@ -9,19 +9,75 @@ import SignUp from './components/SignUp/SignUp'
 import SignIn from './components/SignIn/SignIn'
 import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
+import Button from '@material-ui/core/Button'
+import Checkbox from '@material-ui/core/Checkbox'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import TextField from '@material-ui/core/TextField'
+// import AppBar from '@material-ui/core/AppBar'
+// import ToolBar from '@material-ui/core/ToolBar'
+// import IconButton from '@material-ui/core/IconButton'
+// import MenuIcon from '@material-ui/core/Menu'
+import { Grid, Paper, Typography } from '@material-ui/core/'
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+
+// import { orange } from '@material-ui/core/colors'
+
+// const useStyles = makeStyles({
+//   root: {
+//     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+//     border: 0,
+//     borderRadius: 30,
+//     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+//     color: 'white',
+//     height: 48,
+//     padding: '0 30px'
+//
+//   }
+// })
+
+// function ButtonStyled () {
+//   const classes = useStyles()
+//   return <Button className={classes.root}>Test Styled Button</Button>
+// }
+
+function CheckboxExample () {
+  const [checked, setChecked] = React.useState(true)
+  return (
+    <FormControlLabel
+      control={<Checkbox
+        checked={checked}
+        onChange={(e) => setChecked(e.target.checked)}
+        color="primary"
+        inputProps={{
+          'aria=label': 'secondary checkbox'
+        }}
+      />}
+      label="Testing Check"
+    />
+  )
+}
+
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark'
+  }
+})
 
 class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
       user: null,
-      msgAlerts: []
+      msgAlerts: [],
+      darkmode: false
     }
   }
 
   setUser = user => this.setState({ user })
 
   clearUser = () => this.setState({ user: null })
+
+  // setDarkMode = darkmode => this.setState({ darkmode })
 
   deleteAlert = (id) => {
     this.setState((state) => {
@@ -40,33 +96,60 @@ class App extends Component {
     const { msgAlerts, user } = this.state
 
     return (
-      <Fragment>
-        <Header user={user} />
-        {msgAlerts.map(msgAlert => (
-          <AutoDismissAlert
-            key={msgAlert.id}
-            heading={msgAlert.heading}
-            variant={msgAlert.variant}
-            message={msgAlert.message}
-            id={msgAlert.id}
-            deleteAlert={this.deleteAlert}
-          />
-        ))}
-        <main className="container">
-          <Route path='/sign-up' render={() => (
-            <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
-          )} />
-          <Route path='/sign-in' render={() => (
-            <SignIn msgAlert={this.msgAlert} setUser={this.setUser} />
-          )} />
-          <AuthenticatedRoute user={user} path='/sign-out' render={() => (
-            <SignOut msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
-          )} />
-          <AuthenticatedRoute user={user} path='/change-password' render={() => (
-            <ChangePassword msgAlert={this.msgAlert} user={user} />
-          )} />
-        </main>
-      </Fragment>
+      <ThemeProvider theme={theme}>
+        <Paper style={{ height: '100vh' }}>
+          <Grid container direction="column">
+            <Header user={user} />
+            <Typography variant="h3">
+              Hello
+            </Typography>
+            <Button color="primary" variant="contained">
+              Sample Button
+            </Button >
+            <CheckboxExample />
+            <TextField
+              variant="filled"
+              color="primary"
+              type="email"
+              label="The Time"
+            />
+            {msgAlerts.map(msgAlert => (
+              <AutoDismissAlert
+                key={msgAlert.id}
+                heading={msgAlert.heading}
+                variant={msgAlert.variant}
+                message={msgAlert.message}
+                id={msgAlert.id}
+                deleteAlert={this.deleteAlert}
+              />
+            ))}
+            <main className="container">
+              <Route path='/sign-up' render={() => (
+                <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
+              )} />
+              <Route path='/sign-in' render={() => (
+                <SignIn msgAlert={this.msgAlert} setUser={this.setUser} />
+              )} />
+              <AuthenticatedRoute user={user} path='/sign-out' render={() => (
+                <SignOut msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
+              )} />
+              <AuthenticatedRoute user={user} path='/change-password' render={() => (
+                <ChangePassword msgAlert={this.msgAlert} user={user} />
+              )} />
+            </main>
+            <Button
+              variant="contained"
+              size="large"
+              style={{
+                fontSize: 24,
+                margin: 30
+              }}
+              color="secondary">
+              Hello World
+            </Button>
+          </Grid>
+        </Paper >
+      </ThemeProvider >
     )
   }
 }
