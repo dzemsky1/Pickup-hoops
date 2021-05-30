@@ -100,19 +100,6 @@ class App extends Component {
         <Paper style={{ height: '100vh' }}>
           <Grid container direction="column">
             <Header user={user} />
-            <Typography variant="h3">
-              Hello
-            </Typography>
-            <Button color="primary" variant="contained">
-              Sample Button
-            </Button >
-            <CheckboxExample />
-            <TextField
-              variant="filled"
-              color="primary"
-              type="email"
-              label="The Time"
-            />
             {msgAlerts.map(msgAlert => (
               <AutoDismissAlert
                 key={msgAlert.id}
@@ -147,6 +134,19 @@ class App extends Component {
               color="secondary">
               Hello World
             </Button>
+            <Typography variant="h3">
+              Hello
+            </Typography>
+            <Button color="primary" variant="contained">
+              Sample Button
+            </Button >
+            <CheckboxExample />
+            <TextField
+              variant="filled"
+              color="primary"
+              type="email"
+              label="The Time"
+            />
           </Grid>
         </Paper >
       </ThemeProvider >
