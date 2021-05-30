@@ -1,23 +1,25 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Route } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
 
 import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from './components/AutoDismissAlert/AutoDismissAlert'
 import Header from './components/Header/Header'
+import CreateTeam from './components/CreateTeam/CreateTeam'
+import IndexTeams from './components/IndexTeams/IndexTeams'
 import SignUp from './components/SignUp/SignUp'
 import SignIn from './components/SignIn/SignIn'
 import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
-import Button from '@material-ui/core/Button'
-import Checkbox from '@material-ui/core/Checkbox'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import TextField from '@material-ui/core/TextField'
+// import Button from '@material-ui/core/Button'
+// import Checkbox from '@material-ui/core/Checkbox'
+// import FormControlLabel from '@material-ui/core/FormControlLabel'
+// import TextField from '@material-ui/core/TextField'
 // import AppBar from '@material-ui/core/AppBar'
 // import ToolBar from '@material-ui/core/ToolBar'
 // import IconButton from '@material-ui/core/IconButton'
 // import MenuIcon from '@material-ui/core/Menu'
-import { Grid, Paper, Typography } from '@material-ui/core/'
+import { Grid, Paper } from '@material-ui/core/'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 // import { orange } from '@material-ui/core/colors'
@@ -40,22 +42,22 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 //   return <Button className={classes.root}>Test Styled Button</Button>
 // }
 
-function CheckboxExample () {
-  const [checked, setChecked] = React.useState(true)
-  return (
-    <FormControlLabel
-      control={<Checkbox
-        checked={checked}
-        onChange={(e) => setChecked(e.target.checked)}
-        color="primary"
-        inputProps={{
-          'aria=label': 'secondary checkbox'
-        }}
-      />}
-      label="Testing Check"
-    />
-  )
-}
+// function CheckboxExample () {
+//   const [checked, setChecked] = React.useState(true)
+//   return (
+//     <FormControlLabel
+//       control={<Checkbox
+//         checked={checked}
+//         onChange={(e) => setChecked(e.target.checked)}
+//         color="primary"
+//         inputProps={{
+//           'aria=label': 'secondary checkbox'
+//         }}
+//       />}
+//       label="Testing Check"
+//     />
+//   )
+// }
 
 const theme = createMuiTheme({
   palette: {
@@ -91,7 +93,29 @@ class App extends Component {
       return { msgAlerts: [...state.msgAlerts, { heading, message, variant, id }] }
     })
   }
-
+  // <Button
+  //   variant="contained"
+  //   size="large"
+  //   style={{
+  //     fontSize: 24,
+  //     margin: 30
+  //   }}
+  //   color="secondary">
+  //   Hello World
+  // </Button>
+  // <Typography variant="h3">
+  //   Hello
+  // </Typography>
+  // <Button color="primary" variant="contained">
+  //   Sample Button
+  // </Button >
+  // <CheckboxExample />
+  // <TextField
+  //   variant="filled"
+  //   color="primary"
+  //   type="email"
+  //   label="The Time"
+  // />
   render () {
     const { msgAlerts, user } = this.state
 
@@ -123,30 +147,13 @@ class App extends Component {
               <AuthenticatedRoute user={user} path='/change-password' render={() => (
                 <ChangePassword msgAlert={this.msgAlert} user={user} />
               )} />
+              <AuthenticatedRoute user={user} path='/my-teams' render={() => (
+                <Fragment>
+                  <CreateTeam msgAlert={this.msgAlert} user={user} />
+                  <IndexTeams msgAlert={this.msgAlert} user={user} />
+                </Fragment>
+              )} />
             </main>
-            <Button
-              variant="contained"
-              size="large"
-              style={{
-                fontSize: 24,
-                margin: 30
-              }}
-              color="secondary">
-              Hello World
-            </Button>
-            <Typography variant="h3">
-              Hello
-            </Typography>
-            <Button color="primary" variant="contained">
-              Sample Button
-            </Button >
-            <CheckboxExample />
-            <TextField
-              variant="filled"
-              color="primary"
-              type="email"
-              label="The Time"
-            />
           </Grid>
         </Paper >
       </ThemeProvider >
