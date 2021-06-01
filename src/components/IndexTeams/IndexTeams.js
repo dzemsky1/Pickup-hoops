@@ -6,7 +6,7 @@ import apiUrl from './../../apiConfig'
 import messages from '../AutoDismissAlert/messages'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { Grid } from '@material-ui/core/'
+// import { Grid } from '@material-ui/core/'
 import Card from '@material-ui/core/card'
 import CardContent from '@material-ui/core/cardcontent'
 import CardActions from '@material-ui/core/cardactions'
@@ -26,10 +26,10 @@ class IndexTeams extends Component {
   }
 
   destroyTeam = (event) => {
-    console.log('this is the event target', event.target)
+    console.log('this is the event target', event.currentTarget)
     axios({
       method: 'DELETE',
-      url: `${apiUrl}/teams/${event.target.value}`,
+      url: `${apiUrl}/teams/${event.currentTarget.value}`,
       headers: {
         Authorization: 'Bearer ' + this.props.user.token
       }
@@ -56,6 +56,7 @@ class IndexTeams extends Component {
         variant: 'danger'
       }))
   }
+
   // do this whenever MovieIndex is first shown on the page (mounted)
   componentDidMount () {
     console.log('the props ', this.props)
@@ -74,26 +75,9 @@ class IndexTeams extends Component {
       .catch(console.error)
   }
 
-  // componentDidUpdate (prevState) {
-  //   if (this.state !== prevState) {
-  //     console.log('this.state' + this.state)
-  //     console.log('this is prevState' + prevState)
-  //     axios({
-  //       method: 'GET',
-  //       url: `${apiUrl}/posts`,
-  //       headers: {
-  //         Authorization: 'Bearer ' + this.props.user.token
-  //       }
-  //     })
-  //       .then((res) => {
-  //         this.setState({ posts: res.data.posts })
-  //       })
-  //       .catch(console.error)
-  //   }
-  // }
-
   render () {
     const { teams } = this.state
+    console.log('hm props', this.props)
 
     // if we haven't loaded any movies
     if (!teams) {
@@ -107,37 +91,33 @@ class IndexTeams extends Component {
 
     const teamsJsx = teams.map(team => (
 
-      <Card key={team._id} variant="outlined">
-        <li>
-          <CardContent>
-            <Typography variant="h5" component="h2">
-              {team.name}
-            </Typography>
-            <Typography color="textSecondary" variant="caption">
-              {team.level} - {team.games} games played
-            </Typography>
-            <Typography variant="body1" component="p">
-              {team.members}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button name="delete" color="primary" size="small" value={team._id} onClick={this.destroyTeam}>Remove Team</Button>
-            <UpdateTeam className="update" value={team._id} name={this.props}/>
-          </CardActions>
-        </li>
+      <Card key={team._id} variant="outlined" style={{
+        margin: 24
+      }}>
+        <CardContent>
+          <Typography variant="h5" component="h2">
+            {team.name}
+          </Typography>
+          <Typography color="textSecondary" variant="caption">
+            {team.level} - {team.games} games played
+          </Typography>
+          <Typography variant="body1" component="p">
+            {team.members}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" value={team._id} onClick={this.destroyTeam}>Remove Team</Button>
+          <UpdateTeam className="update" teamname={team.name} members={team.members} value={team._id} name={this.props}/>
+        </CardActions>
       </Card>
     )
     )
     return (
-      <Grid container direction="column">
-        <div className="col-sm-10 col-md-8 mx-auto mt-5">
+      <div className="col-sm-10 col-md-8 mx-auto mt-5">
 
-          <Typography variant="h5">Existing Teams</Typography>
-          <ul>
-            {teamsJsx}
-          </ul>
-        </div>
-      </Grid>
+        <Typography variant="h5">Existing Teams</Typography>
+        {teamsJsx}
+      </div>
     )
   }
 }

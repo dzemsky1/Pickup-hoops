@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 import messages from '../AutoDismissAlert/messages'
 
@@ -6,7 +6,7 @@ import axios from 'axios'
 import apiUrl from './../../apiConfig'
 
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import Button from '@material-ui/core/Button'
 import Modal from 'react-bootstrap/Modal'
 // import { FaEdit } from 'react-icons/fa'
 
@@ -63,6 +63,13 @@ class UpdateTeam extends Component {
         }
         })
       })
+      .then(() => axios({
+        method: 'GET',
+        url: `${apiUrl}/teams`,
+        headers: {
+          Authorization: 'Bearer ' + this.props.name.user.token
+        }
+      }))
       .catch(error => this.props.name.msgAlert({
         heading: 'Failed with error: ' + error.message,
 
@@ -77,13 +84,12 @@ class UpdateTeam extends Component {
     // }
 
     return (
-
-      <div className="col-sm-10 col-md-8 mx-auto mt-5">
+      <Fragment>
         <Button onClick={this.changeModal}> Update Team </Button>
         <Modal show={this.state.show}>
-          <Modal.Header>Update Post</Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={this.handleSubmit}>
+          <Form onSubmit={this.handleSubmit}>
+            <Modal.Header>Update Post</Modal.Header>
+            <Modal.Body>
               <Form.Group controlId="name">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
@@ -91,7 +97,7 @@ class UpdateTeam extends Component {
                   type="text"
                   name="name"
                   value={this.state.team.name}
-                  placeholder="Name"
+                  placeholder={this.props.teamname}
                   onChange={this.handleChange}
                 />
               </Form.Group>
@@ -102,24 +108,19 @@ class UpdateTeam extends Component {
                   name="members"
                   value={this.state.team.members}
                   type="text"
-                  placeholder="Members"
+                  placeholder={this.props.members}
                   onChange={this.handleChange}
                 />
               </Form.Group>
-              <Button
-                variant="primary"
-                type="submit"
-              >
-                Submit
-              </Button>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.changeModal}> Close</Button>
-          </Modal.Footer>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button color="primary" onClick={this.changeModal}> Cancel </Button>
+              <Button type="submit" variant="contained" color="primary" onClick={this.changeModal}> Submit </Button>
+            </Modal.Footer>
+          </Form>
         </Modal>
+      </Fragment>
 
-      </div>
     )
   }
 }
