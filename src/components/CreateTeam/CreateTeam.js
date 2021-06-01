@@ -3,14 +3,14 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import Button from '@material-ui/core/Button'
 
 const CreateTeam = props => {
   const [team, setTeam] = useState({
     name: '',
     members: '',
     level: '',
-    games: ''
+    games: 0
   })
   // const [setCreatedTeamId] = useState(null)
   // const [createdBookId, setCreatedBookId] = useState(null)
@@ -82,7 +82,8 @@ const CreateTeam = props => {
             />
           </Form.Group>
           <Button
-            variant="primary"
+            color="primary"
+            variant="contained"
             type="submit"
           >
             Submit

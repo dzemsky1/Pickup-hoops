@@ -4,7 +4,13 @@ import Spinner from 'react-bootstrap/Spinner'
 import axios from 'axios'
 import apiUrl from './../../apiConfig'
 import messages from '../AutoDismissAlert/messages'
-import Button from 'react-bootstrap/Button'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import { Grid } from '@material-ui/core/'
+import Card from '@material-ui/core/card'
+import CardContent from '@material-ui/core/cardcontent'
+import CardActions from '@material-ui/core/cardactions'
+import UpdateTeam from './../UpdateTeam/UpdateTeam'
 // import UpdatePost from './../UpdatePost/Update'
 // import { FaTrash } from 'react-icons/fa'
 
@@ -18,7 +24,9 @@ class IndexTeams extends Component {
       teams: null
     }
   }
+
   destroyTeam = (event) => {
+    console.log('this is the event target', event.target)
     axios({
       method: 'DELETE',
       url: `${apiUrl}/teams/${event.target.value}`,
@@ -38,7 +46,7 @@ class IndexTeams extends Component {
         this.setState({ teams: res.data.teams })
       })
       .then(() => this.props.msgAlert({
-        heading: 'Post Deleted',
+        heading: 'Team Deleted',
         message: messages.deletePostSuccess,
         variant: 'success'
       }))
@@ -99,25 +107,37 @@ class IndexTeams extends Component {
 
     const teamsJsx = teams.map(team => (
 
-      <div key={team._id} className="row">
+      <Card key={team._id} variant="outlined">
         <li>
-          <h4>{team.name}</h4> <br/> {team.members} <br/>
-          <Button className="delete" value={team._id} onClick={this.destroyPost}>Delete</Button>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              {team.name}
+            </Typography>
+            <Typography color="textSecondary" variant="caption">
+              {team.level} - {team.games} games played
+            </Typography>
+            <Typography variant="body1" component="p">
+              {team.members}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button name="delete" color="primary" size="small" value={team._id} onClick={this.destroyTeam}>Remove Team</Button>
+            <UpdateTeam className="update" value={team._id} name={this.props}/>
+          </CardActions>
         </li>
-      </div>
+      </Card>
     )
     )
     return (
-      <div className="wall">
+      <Grid container direction="column">
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
 
-          <h3 className="wall-title">Wall</h3>
-
-          <ul className="post-list">
+          <Typography variant="h5">Existing Teams</Typography>
+          <ul>
             {teamsJsx}
           </ul>
         </div>
-      </div>
+      </Grid>
     )
   }
 }

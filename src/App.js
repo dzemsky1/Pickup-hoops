@@ -121,7 +121,7 @@ class App extends Component {
 
     return (
       <ThemeProvider theme={theme}>
-        <Paper style={{ height: '100vh' }}>
+        <Paper style={{ height: '500vh' }}>
           <Grid container direction="column">
             <Header user={user} />
             {msgAlerts.map(msgAlert => (
