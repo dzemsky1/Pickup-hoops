@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Spinner from 'react-bootstrap/Spinner'
 import axios from 'axios'
 import apiUrl from './../../apiConfig'
-import messages from '../AutoDismissAlert/messages'
+// import messages from '../AutoDismissAlert/messages'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 // import { Grid } from '@material-ui/core/'
@@ -11,11 +11,10 @@ import Card from '@material-ui/core/card'
 import Chip from '@material-ui/core/chip'
 import CardContent from '@material-ui/core/cardcontent'
 import CardActions from '@material-ui/core/cardactions'
-import UpdateTeam from './../UpdateTeam/UpdateTeam'
 // import UpdatePost from './../UpdatePost/Update'
 // import { FaTrash } from 'react-icons/fa'
 
-class IndexTeams extends Component {
+class OtherTeams extends Component {
   constructor (props) {
     // this is a best practice
     // this sets `this.props` in the constructor
@@ -26,38 +25,6 @@ class IndexTeams extends Component {
     }
   }
 
-  destroyTeam = (event) => {
-    console.log('this is the event target', event.currentTarget)
-    axios({
-      method: 'DELETE',
-      url: `${apiUrl}/teams/${event.currentTarget.value}`,
-      headers: {
-        Authorization: 'Bearer ' + this.props.user.token
-      }
-    })
-
-      .then(() => axios({
-        method: 'GET',
-        url: `${apiUrl}/teams`,
-        headers: {
-          Authorization: 'Bearer ' + this.props.user.token
-        }
-      }))
-      .then((res) => {
-        this.setState({ teams: res.data.teams })
-      })
-      .then(() => this.props.msgAlert({
-        heading: 'Team Deleted',
-        message: messages.deletePostSuccess,
-        variant: 'success'
-      }))
-      .catch(error => this.props.msgAlert({
-        heading: 'Failed with error: ' + error.message,
-        message: messages.deletePostFailure,
-        variant: 'danger'
-      }))
-  }
-
   // do this whenever MovieIndex is first shown on the page (mounted)
   componentDidMount () {
     console.log('the props ', this.props)
@@ -65,7 +32,7 @@ class IndexTeams extends Component {
     // Here we will make any HTTP requests
     axios({
       method: 'GET',
-      url: `${apiUrl}/teams`,
+      url: `${apiUrl}/otherteams`,
       headers: {
         Authorization: 'Bearer ' + this.props.user.token
       }
@@ -106,8 +73,7 @@ class IndexTeams extends Component {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" value={team._id} onClick={this.destroyTeam}>Remove Team</Button>
-          <UpdateTeam className="update" teamname={team.name} members={team.members} value={team._id} name={this.props}/>
+          <Button color="primary" size="small" variant="contained" value={team._id} onClick={this.destroyTeam} fullWidth>Challenge Team</Button>
         </CardActions>
       </Card>
     )
@@ -115,11 +81,11 @@ class IndexTeams extends Component {
     return (
       <div className="col-sm-10 col-md-8 mx-auto mt-5">
 
-        <Typography variant="h5">Existing Teams</Typography>
+        <Typography variant="h5">Check out the Competition</Typography>
         {teamsJsx}
       </div>
     )
   }
 }
 
-export default IndexTeams
+export default OtherTeams

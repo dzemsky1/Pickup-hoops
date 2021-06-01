@@ -7,6 +7,7 @@ import AutoDismissAlert from './components/AutoDismissAlert/AutoDismissAlert'
 import Header from './components/Header/Header'
 import CreateTeam from './components/CreateTeam/CreateTeam'
 import IndexTeams from './components/IndexTeams/IndexTeams'
+import OtherTeams from './components/OtherTeams/OtherTeams'
 import SignUp from './components/SignUp/SignUp'
 import SignIn from './components/SignIn/SignIn'
 import SignOut from './components/SignOut/SignOut'
@@ -146,6 +147,9 @@ class App extends Component {
               )} />
               <AuthenticatedRoute user={user} path='/change-password' render={() => (
                 <ChangePassword msgAlert={this.msgAlert} user={user} />
+              )} />
+              <AuthenticatedRoute user={user} path='/opponents' render={() => (
+                <OtherTeams msgAlert={this.msgAlert} user={user} />
               )} />
               <AuthenticatedRoute user={user} path='/my-teams' render={() => (
                 <Fragment>
