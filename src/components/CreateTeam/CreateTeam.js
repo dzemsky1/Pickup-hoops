@@ -27,7 +27,7 @@ const CreateTeam = (props) => {
     })
   }
   const handleSubmit = event => {
-    console.log('this is the props', props)
+    console.log('this is the data being sent', props)
     event.preventDefault()
     axios({
       url: `${apiUrl}/teams`,

@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 
 const authenticatedOptions = (
   <Fragment>
+    <Nav.Link href="#challenges">Challenges</Nav.Link>
     <Nav.Link href="#opponents">Opponents</Nav.Link>
     <Nav.Link href="#my-teams">My Teams</Nav.Link>
     <Nav.Link href="#change-password">Change Password</Nav.Link>

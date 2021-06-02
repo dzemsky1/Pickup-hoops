@@ -6,6 +6,7 @@ import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRou
 import AutoDismissAlert from './components/AutoDismissAlert/AutoDismissAlert'
 import Header from './components/Header/Header'
 import CreateTeam from './components/CreateTeam/CreateTeam'
+import IndexChallenges from './components/IndexChallenges/IndexChallenges'
 import IndexTeams from './components/IndexTeams/IndexTeams'
 import OtherTeams from './components/OtherTeams/OtherTeams'
 import SignUp from './components/SignUp/SignUp'
@@ -72,9 +73,16 @@ class App extends Component {
     this.state = {
       user: null,
       msgAlerts: [],
-      darkmode: false
+      darkmode: false,
+      primaryTeam: null
     }
   }
+
+setTeam = () => {
+  this.setState({
+    primaryTeam: ''
+  })
+}
 
   setUser = user => this.setState({ user })
 
@@ -119,6 +127,7 @@ class App extends Component {
   // />
   render () {
     const { msgAlerts, user } = this.state
+    console.log(user)
 
     return (
       <ThemeProvider theme={theme}>
@@ -150,6 +159,9 @@ class App extends Component {
               )} />
               <AuthenticatedRoute user={user} path='/opponents' render={() => (
                 <OtherTeams msgAlert={this.msgAlert} user={user} />
+              )} />
+              <AuthenticatedRoute user={user} path='/challenges' render={() => (
+                <IndexChallenges primaryTeam={this.primaryTeam} msgAlert={this.msgAlert} user={user} />
               )} />
               <AuthenticatedRoute user={user} path='/my-teams' render={() => (
                 <Fragment>

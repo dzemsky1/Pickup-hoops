@@ -4,7 +4,8 @@ import Spinner from 'react-bootstrap/Spinner'
 import axios from 'axios'
 import apiUrl from './../../apiConfig'
 // import messages from '../AutoDismissAlert/messages'
-import Button from '@material-ui/core/Button'
+import CreateChallenge from '../CreateChallenge/CreateChallenge'
+// import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 // import { Grid } from '@material-ui/core/'
 import Card from '@material-ui/core/card'
@@ -21,10 +22,34 @@ class OtherTeams extends Component {
     super(props)
     // keep track of all the movies we want to show, they will initially be null
     this.state = {
-      teams: null
+      teams: null,
+      hometeam: '',
+      awayteam: '',
+      winner: null,
+      location: ''
     }
   }
 
+  // challengeTeam = event => {
+  //   axios({
+  //     url: `${apiUrl}/challenges`,
+  //     method: 'POST',
+  //     data: { team },
+  //     headers: {
+  //       Authorization: 'Bearer ' + props.user.token
+  //     }
+  //   })
+  //     .then(() => props.msgAlert({
+  //       heading: 'Team Created',
+  //
+  //       message: messages.createPostSuccess,
+  //
+  //       variant: 'success'
+  //     }))
+  // .then(res => this.setState({ createdBookId: res.data.book._id }))
+  // .then(res => setCreatedTeamId(res.data.team._id))
+  //     .catch(console.error)
+  // }
   // do this whenever MovieIndex is first shown on the page (mounted)
   componentDidMount () {
     console.log('the props ', this.props)
@@ -73,7 +98,7 @@ class OtherTeams extends Component {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button color="primary" size="small" variant="contained" value={team._id} onClick={this.destroyTeam} fullWidth>Challenge Team</Button>
+          <CreateChallenge msgAlert={this.props.msgAlert} user={this.props.user} hometeam={this.props.user._id} awayteam={team._id}>Challenge Team </CreateChallenge>
         </CardActions>
       </Card>
     )

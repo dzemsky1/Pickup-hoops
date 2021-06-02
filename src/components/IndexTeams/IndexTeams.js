@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import Spinner from 'react-bootstrap/Spinner'
 import axios from 'axios'
 import apiUrl from './../../apiConfig'
-import messages from '../AutoDismissAlert/messages'
+// import messages from '../AutoDismissAlert/messages'
+import UpdateTeam from '../UpdateTeam/UpdateTeam'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 // import { Grid } from '@material-ui/core/'
@@ -11,7 +12,6 @@ import Card from '@material-ui/core/card'
 import Chip from '@material-ui/core/chip'
 import CardContent from '@material-ui/core/cardcontent'
 import CardActions from '@material-ui/core/cardactions'
-import UpdateTeam from './../UpdateTeam/UpdateTeam'
 // import UpdatePost from './../UpdatePost/Update'
 // import { FaTrash } from 'react-icons/fa'
 
@@ -26,8 +26,20 @@ class IndexTeams extends Component {
     }
   }
 
+  setTeam = (event) => {
+    axios({
+      method: 'PATCH',
+      url: `${apiUrl}/users`,
+      data: { user: {
+        primaryTeam: event.currentTarget.value } },
+
+      headers: {
+        Authorization: 'Bearer ' + this.props.user.token
+      }
+    })
+  }
+
   destroyTeam = (event) => {
-    console.log('this is the event target', event.currentTarget)
     axios({
       method: 'DELETE',
       url: `${apiUrl}/teams/${event.currentTarget.value}`,
@@ -48,12 +60,12 @@ class IndexTeams extends Component {
       })
       .then(() => this.props.msgAlert({
         heading: 'Team Deleted',
-        message: messages.deletePostSuccess,
+        message: '',
         variant: 'success'
       }))
       .catch(error => this.props.msgAlert({
         heading: 'Failed with error: ' + error.message,
-        message: messages.deletePostFailure,
+        message: '',
         variant: 'danger'
       }))
   }
@@ -75,10 +87,11 @@ class IndexTeams extends Component {
       })
       .catch(console.error)
   }
-
+  // {this.props.user.primaryTeam === team._id && <Button }
   render () {
     const { teams } = this.state
-    console.log('hm props', this.props)
+    console.log('the teams', teams)
+    console.log('the active user', this.props.user)
 
     // if we haven't loaded any movies
     if (!teams) {
@@ -108,6 +121,7 @@ class IndexTeams extends Component {
         <CardActions>
           <Button size="small" value={team._id} onClick={this.destroyTeam}>Remove Team</Button>
           <UpdateTeam className="update" teamname={team.name} members={team.members} value={team._id} name={this.props}/>
+          <Button size="small" value={team._id} onClick={this.setTeam}>Set as Primary</Button>
         </CardActions>
       </Card>
     )
