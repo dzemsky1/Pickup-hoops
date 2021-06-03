@@ -62,6 +62,8 @@ class IndexChallenges extends Component {
       <div key={challenge._id} className="row">
         <li>
           <h4>{challenge.awayteam.name}</h4>
+          <h6>vs</h6>
+          <h4>{challenge.hometeam.name}</h4>
         </li>
       </div>
     )

@@ -166,7 +166,7 @@ setTeam = () => {
               <AuthenticatedRoute user={user} path='/my-teams' render={() => (
                 <Fragment>
                   <CreateTeam msgAlert={this.msgAlert} user={user} />
-                  <IndexTeams msgAlert={this.msgAlert} user={user} />
+                  <IndexTeams msgAlert={this.msgAlert} setUser={this.setUser} user={user} />
                 </Fragment>
               )} />
             </main>

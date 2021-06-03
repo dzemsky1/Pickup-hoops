@@ -37,6 +37,14 @@ class IndexTeams extends Component {
         Authorization: 'Bearer ' + this.props.user.token
       }
     })
+      .then(() => axios({
+        method: 'GET',
+        url: `${apiUrl}/users/${this.props.user._id}`,
+        headers: {
+          Authorization: 'Bearer ' + this.props.user.token
+        }
+      }))
+      .then(res => this.props.setUser(res.data.user))
   }
 
   destroyTeam = (event) => {

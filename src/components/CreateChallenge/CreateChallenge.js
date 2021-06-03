@@ -42,10 +42,9 @@ const CreateChallenge = (props) => {
   //   })
   // }
   const createChallenge = event => {
-    setChallenge(challenge.hometeam = props.user._id)
+    setChallenge(challenge.hometeam = props.user.primaryTeam)
     setChallenge(challenge.awayteam = props.awayteam)
     console.log('this is the state', challenge)
-    console.log('this is the other hometeam', props.hometeam)
     axios({
       url: `${apiUrl}/challenges`,
       method: 'POST',
