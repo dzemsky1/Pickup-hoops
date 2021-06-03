@@ -7,12 +7,14 @@ import AutoDismissAlert from './components/AutoDismissAlert/AutoDismissAlert'
 import Header from './components/Header/Header'
 import CreateTeam from './components/CreateTeam/CreateTeam'
 import IndexChallenges from './components/IndexChallenges/IndexChallenges'
+import AcceptedChallenges from './components/IndexChallenges/AcceptedChallenges'
 import IndexTeams from './components/IndexTeams/IndexTeams'
 import OtherTeams from './components/OtherTeams/OtherTeams'
 import SignUp from './components/SignUp/SignUp'
 import SignIn from './components/SignIn/SignIn'
 import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
+import Nav from 'react-bootstrap/Nav'
 // import Button from '@material-ui/core/Button'
 // import Checkbox from '@material-ui/core/Checkbox'
 // import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -22,49 +24,53 @@ import ChangePassword from './components/ChangePassword/ChangePassword'
 // import IconButton from '@material-ui/core/IconButton'
 // import MenuIcon from '@material-ui/core/Menu'
 import { Grid, Paper } from '@material-ui/core/'
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import Drawer from '@material-ui/core/Drawer'
+import Typography from '@material-ui/core/Typography'
+import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles'
 
 // import { orange } from '@material-ui/core/colors'
 
-// const useStyles = makeStyles({
-//   root: {
-//     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-//     border: 0,
-//     borderRadius: 30,
-//     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-//     color: 'white',
-//     height: 48,
-//     padding: '0 30px'
-//
-//   }
-// })
+const useStyles = makeStyles({
+  // root: {
+  //   background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  //   border: 0,
+  //   borderRadius: 30,
+  //   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  //   color: 'white',
+  //   height: 48,
+  //   padding: '0 30px'
+  // }
+  drawer: {
+    width: 240,
+    marginTop: 40
+  },
+  drawerPaper: {
+    width: 240
+  }
+})
 
-// function ButtonStyled () {
-//   const classes = useStyles()
-//   return <Button className={classes.root}>Test Styled Button</Button>
-// }
-
-// function CheckboxExample () {
-//   const [checked, setChecked] = React.useState(true)
-//   return (
-//     <FormControlLabel
-//       control={<Checkbox
-//         checked={checked}
-//         onChange={(e) => setChecked(e.target.checked)}
-//         color="primary"
-//         inputProps={{
-//           'aria=label': 'secondary checkbox'
-//         }}
-//       />}
-//       label="Testing Check"
-//     />
-//   )
-// }
+function StyledDrawer () {
+  const classes = useStyles()
+  return <Drawer
+    className={classes.drawer}
+    variant="permanent"
+    anchor="left"
+    classes={{ paper: classes.drawerPaper }}
+  >
+    <Fragment>
+      <Typography variant="h6"> Challenges </Typography>
+      <Nav.Link href="#challenges">Accepted</Nav.Link>
+      <Nav.Link href="#outgoing">Outgoing</Nav.Link>
+      <Nav.Link href="#challenges">Incoming</Nav.Link>
+    </Fragment>
+  </Drawer>
+}
 
 const theme = createMuiTheme({
   palette: {
     type: 'dark'
-  }
+  },
+  display: 'flex'
 })
 
 class App extends Component {
@@ -161,7 +167,16 @@ setTeam = () => {
                 <OtherTeams msgAlert={this.msgAlert} user={user} />
               )} />
               <AuthenticatedRoute user={user} path='/challenges' render={() => (
-                <IndexChallenges primaryTeam={this.primaryTeam} msgAlert={this.msgAlert} user={user} />
+                <Fragment>
+                  <StyledDrawer/>
+                  <AcceptedChallenges primaryTeam={this.primaryTeam} msgAlert={this.msgAlert} user={user} />
+                </Fragment>
+              )} />
+              <AuthenticatedRoute user={user} path='/outgoing' render={() => (
+                <Fragment>
+                  <StyledDrawer/>
+                  <IndexChallenges msgAlert={this.msgAlert} user={user} />
+                </Fragment>
               )} />
               <AuthenticatedRoute user={user} path='/my-teams' render={() => (
                 <Fragment>

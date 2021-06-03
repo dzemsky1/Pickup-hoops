@@ -10,7 +10,7 @@ import Card from '@material-ui/core/card'
 import CardContent from '@material-ui/core/cardcontent'
 import CardActions from '@material-ui/core/cardactions'
 
-class IndexChallenges extends Component {
+class AcceptedChallenges extends Component {
   constructor (props) {
     // this is a best practice
     // this sets `this.props` in the constructor
@@ -23,31 +23,38 @@ class IndexChallenges extends Component {
 
   // do this whenever MovieIndex is first shown on the page (mounted)
   componentDidMount () {
+    console.log('the props ', this.props)
+    // this function runs at the end of the Mounting stage
+    // Here we will make any HTTP requests
     axios({
       method: 'GET',
-      url: `${apiUrl}/pending-challenges`,
+      url: `${apiUrl}/accepted-challenges`,
       headers: {
         Authorization: 'Bearer ' + this.props.user.token
       }
     })
       .then((res) => {
-        this.setState({ challenges: res.data.challenges })
+        this.setState({ acceptedChallenges: res.data.challenges })
       })
       .catch(console.error)
   }
 
   render () {
     const { challenges } = this.state
-    console.log('challenges', challenges)
+    // console.log('the challenges', challenges)
+    // console.log('hm props', this.props)
 
+    // if we haven't loaded any movies
     if (!challenges) {
       // show a loading spinner
       return (
-        <Typography variant="h6">Nothing Pending</Typography>
+        <div className="col-sm-10 col-md-8 mx-auto mt-5">
+          <Typography variant="h5">No Accepted Challenges Yet</Typography>
+        </div>
       )
     }
 
-    const pendingJsx = challenges.map(challenge => (
+    const acceptedJsx = challenges.map(challenge => (
       <Card key={challenge._id} variant="outlined" style={{
         margin: 24
       }}>
@@ -57,7 +64,7 @@ class IndexChallenges extends Component {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Buzz Team to Accept</Button>
+          <Button size="small">We have played</Button>
         </CardActions>
       </Card>
     )
@@ -65,11 +72,12 @@ class IndexChallenges extends Component {
 
     return (
       <div className="col-sm-10 col-md-8 mx-auto mt-5">
-        <Typography variant="h5">Pending Challenges</Typography>
-        {pendingJsx}
+
+        <Typography variant="h5">Accepted Challenges</Typography>
+        {acceptedJsx}
       </div>
     )
   }
 }
 
-export default IndexChallenges
+export default AcceptedChallenges
