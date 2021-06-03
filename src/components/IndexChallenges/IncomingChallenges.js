@@ -10,7 +10,7 @@ import Card from '@material-ui/core/card'
 import CardContent from '@material-ui/core/cardcontent'
 import CardActions from '@material-ui/core/cardactions'
 
-class IndexChallenges extends Component {
+class IncomingChallenges extends Component {
   constructor (props) {
     // this is a best practice
     // this sets `this.props` in the constructor
@@ -25,12 +25,13 @@ class IndexChallenges extends Component {
   componentDidMount () {
     axios({
       method: 'GET',
-      url: `${apiUrl}/pending-challenges`,
+      url: `${apiUrl}/incoming-challenges`,
       headers: {
         Authorization: 'Bearer ' + this.props.user.token
       }
     })
       .then((res) => {
+        console.log('response data', res.data)
         this.setState({ challenges: res.data.challenges })
       })
       .catch(console.error)
@@ -44,7 +45,7 @@ class IndexChallenges extends Component {
       // show a loading spinner
       return (
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
-          <Typography variant="h5">Nothing Pending</Typography>
+          <Typography variant="h5">Nobodys Challenged You</Typography>
         </div>
       )
     }
@@ -59,7 +60,7 @@ class IndexChallenges extends Component {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Buzz Team to Accept</Button>
+          <Button size="small">Accept Challenge</Button>
         </CardActions>
       </Card>
     )
@@ -67,11 +68,11 @@ class IndexChallenges extends Component {
 
     return (
       <div className="col-sm-10 col-md-8 mx-auto mt-5">
-        <Typography variant="h5">Pending Challenges</Typography>
+        <Typography variant="h5">Respond Now!</Typography>
         {pendingJsx}
       </div>
     )
   }
 }
 
-export default IndexChallenges
+export default IncomingChallenges

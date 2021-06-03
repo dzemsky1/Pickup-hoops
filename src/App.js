@@ -6,8 +6,11 @@ import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRou
 import AutoDismissAlert from './components/AutoDismissAlert/AutoDismissAlert'
 import Header from './components/Header/Header'
 import CreateTeam from './components/CreateTeam/CreateTeam'
+
 import IndexChallenges from './components/IndexChallenges/IndexChallenges'
 import AcceptedChallenges from './components/IndexChallenges/AcceptedChallenges'
+import IncomingChallenges from './components/IndexChallenges/IncomingChallenges'
+
 import IndexTeams from './components/IndexTeams/IndexTeams'
 import OtherTeams from './components/OtherTeams/OtherTeams'
 import SignUp from './components/SignUp/SignUp'
@@ -57,12 +60,10 @@ function StyledDrawer () {
     anchor="left"
     classes={{ paper: classes.drawerPaper }}
   >
-    <Fragment>
-      <Typography variant="h6"> Challenges </Typography>
-      <Nav.Link href="#challenges">Accepted</Nav.Link>
-      <Nav.Link href="#outgoing">Outgoing</Nav.Link>
-      <Nav.Link href="#challenges">Incoming</Nav.Link>
-    </Fragment>
+    <Typography variant="h6"> Challenges </Typography>
+    <Nav.Link href="#accepted">Accepted</Nav.Link>
+    <Nav.Link href="#pending">Pending</Nav.Link>
+    <Nav.Link href="#incoming">Incoming</Nav.Link>
   </Drawer>
 }
 
@@ -166,16 +167,22 @@ setTeam = () => {
               <AuthenticatedRoute user={user} path='/opponents' render={() => (
                 <OtherTeams msgAlert={this.msgAlert} user={user} />
               )} />
-              <AuthenticatedRoute user={user} path='/challenges' render={() => (
+              <AuthenticatedRoute user={user} path='/accepted' render={() => (
                 <Fragment>
                   <StyledDrawer/>
                   <AcceptedChallenges primaryTeam={this.primaryTeam} msgAlert={this.msgAlert} user={user} />
                 </Fragment>
               )} />
-              <AuthenticatedRoute user={user} path='/outgoing' render={() => (
+              <AuthenticatedRoute user={user} path='/pending' render={() => (
                 <Fragment>
                   <StyledDrawer/>
                   <IndexChallenges msgAlert={this.msgAlert} user={user} />
+                </Fragment>
+              )} />
+              <AuthenticatedRoute user={user} path='/incoming' render={() => (
+                <Fragment>
+                  <StyledDrawer/>
+                  <IncomingChallenges msgAlert={this.msgAlert} user={user} />
                 </Fragment>
               )} />
               <AuthenticatedRoute user={user} path='/my-teams' render={() => (
