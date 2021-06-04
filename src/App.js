@@ -10,6 +10,7 @@ import CreateTeam from './components/CreateTeam/CreateTeam'
 import IndexChallenges from './components/IndexChallenges/IndexChallenges'
 import AcceptedChallenges from './components/IndexChallenges/AcceptedChallenges'
 import IncomingChallenges from './components/IndexChallenges/IncomingChallenges'
+import FinishedChallenges from './components/IndexChallenges/FinishedChallenges'
 
 import IndexTeams from './components/IndexTeams/IndexTeams'
 import OtherTeams from './components/OtherTeams/OtherTeams'
@@ -18,7 +19,7 @@ import SignIn from './components/SignIn/SignIn'
 import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
 import Nav from 'react-bootstrap/Nav'
-// import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button'
 // import Checkbox from '@material-ui/core/Checkbox'
 // import FormControlLabel from '@material-ui/core/FormControlLabel'
 // import TextField from '@material-ui/core/TextField'
@@ -64,15 +65,9 @@ function StyledDrawer () {
     <Nav.Link href="#accepted">Accepted</Nav.Link>
     <Nav.Link href="#pending">Pending</Nav.Link>
     <Nav.Link href="#incoming">Incoming</Nav.Link>
+    <Nav.Link href="#finished">Finished</Nav.Link>
   </Drawer>
 }
-
-const theme = createMuiTheme({
-  palette: {
-    type: 'dark'
-  },
-  display: 'flex'
-})
 
 class App extends Component {
   constructor (props) {
@@ -80,16 +75,17 @@ class App extends Component {
     this.state = {
       user: null,
       msgAlerts: [],
-      darkmode: false,
+      theme: false,
       primaryTeam: null
     }
   }
 
-setTeam = () => {
-  this.setState({
-    primaryTeam: ''
+  theme = createMuiTheme({
+    palette: {
+      type: 'dark'
+    },
+    display: 'flex'
   })
-}
 
   setUser = user => this.setState({ user })
 
@@ -103,44 +99,31 @@ setTeam = () => {
     })
   }
 
+  changeTheme = () => {
+    console.log('the theme state', this.state.theme)
+    if (this.theme.palette.type === 'dark') {
+      this.theme.palette.type = 'light'
+    } else {
+      this.theme.palette.type = 'dark'
+    }
+  }
+
   msgAlert = ({ heading, message, variant }) => {
     const id = uuid()
     this.setState((state) => {
       return { msgAlerts: [...state.msgAlerts, { heading, message, variant, id }] }
     })
   }
-  // <Button
-  //   variant="contained"
-  //   size="large"
-  //   style={{
-  //     fontSize: 24,
-  //     margin: 30
-  //   }}
-  //   color="secondary">
-  //   Hello World
-  // </Button>
-  // <Typography variant="h3">
-  //   Hello
-  // </Typography>
-  // <Button color="primary" variant="contained">
-  //   Sample Button
-  // </Button >
-  // <CheckboxExample />
-  // <TextField
-  //   variant="filled"
-  //   color="primary"
-  //   type="email"
-  //   label="The Time"
-  // />
+
   render () {
     const { msgAlerts, user } = this.state
-    console.log(user)
 
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={this.theme}>
         <Paper style={{ height: '500vh' }}>
           <Grid container direction="column">
-            <Header user={user} />
+            <Header user={user} changeTheme={this.changeTheme}/>
+            <Button onClick={this.changeTheme}> Theme </Button>
             {msgAlerts.map(msgAlert => (
               <AutoDismissAlert
                 key={msgAlert.id}
@@ -183,6 +166,12 @@ setTeam = () => {
                 <Fragment>
                   <StyledDrawer/>
                   <IncomingChallenges msgAlert={this.msgAlert} user={user} />
+                </Fragment>
+              )} />
+              <AuthenticatedRoute user={user} path='/finished' render={() => (
+                <Fragment>
+                  <StyledDrawer/>
+                  <FinishedChallenges msgAlert={this.msgAlert} user={user} />
                 </Fragment>
               )} />
               <AuthenticatedRoute user={user} path='/my-teams' render={() => (

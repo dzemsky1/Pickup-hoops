@@ -13,7 +13,8 @@ const CreateChallenge = (props) => {
     awayteam: '',
     winner: null,
     location: '',
-    accepted: false
+    accepted: false,
+    finished: false
   })
   const [teams, setTeams] = useState({
     teams: null

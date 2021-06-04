@@ -14,7 +14,8 @@ const CreateTeam = (props) => {
     name: '',
     members: '',
     level: '',
-    games: 0
+    wins: 0,
+    losses: 0
   })
   // const [setCreatedTeamId] = useState(null)
   // const [createdBookId, setCreatedBookId] = useState(null)

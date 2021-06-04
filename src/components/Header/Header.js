@@ -24,7 +24,7 @@ const alwaysOptions = (
   </Fragment>
 )
 
-const Header = ({ user }) => (
+const Header = ({ user, changeTheme }) => (
   <Navbar bg="dark" variant="dark" expand="md">
     <Navbar.Brand href="#">
       3-v-3

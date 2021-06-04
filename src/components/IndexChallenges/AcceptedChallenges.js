@@ -21,6 +21,76 @@ class AcceptedChallenges extends Component {
     }
   }
 
+  homeChallenge = (event) => {
+    console.log('the event target challenge', event.currentTarget.name)
+    axios({
+      method: 'PATCH',
+      url: `${apiUrl}/challenges/${event.currentTarget.value}`,
+      data: { challenge: { finished: true,
+        winner: event.currentTarget.name } },
+      headers: {
+        Authorization: 'Bearer ' + this.props.user.token
+      }
+    })
+      .then(axios({
+        method: 'PATCH',
+        url: `${apiUrl}/teams/${event.currentTarget.name}`,
+        data: { team: { wins: +1 } },
+        headers: {
+          Authorization: 'Bearer ' + this.props.user.token
+        }
+      })
+        .then(() => this.props.msgAlert({
+          heading: 'Big Win for the home team!',
+
+          message: '',
+
+          variant: 'success'
+        }))
+        .catch(error => this.props.msgAlert({
+          heading: 'Failed with error: ' + error.message,
+
+          message: '',
+          variant: 'danger'
+        })
+        )
+      )
+  }
+
+  awayChallenge = (event) => {
+    axios({
+      method: 'PATCH',
+      url: `${apiUrl}/challenges/${event.currentTarget.value}`,
+      data: { challenge: { finished: true,
+        winner: event.currentTarget.name } },
+      headers: {
+        Authorization: 'Bearer ' + this.props.user.token
+      }
+    })
+      .then(axios({
+        method: 'PATCH',
+        url: `${apiUrl}/teams/${event.currentTarget.name}`,
+        data: { team: { wins: +1 } },
+        headers: {
+          Authorization: 'Bearer ' + this.props.user.token
+        }
+      })
+        .then(() => this.props.msgAlert({
+          heading: 'Away team steals it!',
+
+          message: '',
+
+          variant: 'success'
+        }))
+        .catch(error => this.props.msgAlert({
+          heading: 'Failed with error: ' + error.message,
+
+          message: '',
+          variant: 'danger'
+        })
+        )
+      )
+  }
   // do this whenever MovieIndex is first shown on the page (mounted)
   componentDidMount () {
     console.log('the props ', this.props)
@@ -65,7 +135,8 @@ class AcceptedChallenges extends Component {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">We have played</Button>
+          <Button size="small" variant="contained" color="primary" value={challenge._id} name={challenge.hometeam._id} onClick={this.homeChallenge}>{`${challenge.hometeam.name} Won`}</Button>
+          <Button size="small" variant="contained" color="primary" value={challenge._id} name={challenge.awayteam._id} onClick={this.awayChallenge}>{`${challenge.awayteam.name} Won`}</Button>
         </CardActions>
       </Card>
     )

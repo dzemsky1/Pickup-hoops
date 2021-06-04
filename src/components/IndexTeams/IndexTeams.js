@@ -120,8 +120,9 @@ class IndexTeams extends Component {
           <Typography variant="h5" component="h2">
             {team.name}
           </Typography>
-          <Chip label={team.level} color="secondary" size="medium"/>
-          <Chip label={`${team.games} games played`} color="secondary" size="medium"/>
+          <Chip label={team.level} color="secondary" size="small"/>
+          <Chip label={`${team.wins} wins`} color="secondary" size="small"/>
+          <Chip label={`${team.losses} losses`} color="secondary" size="small"/>
           <Typography variant="body1" component="p">
             {team.members}
           </Typography>
