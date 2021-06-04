@@ -21,6 +21,31 @@ class IncomingChallenges extends Component {
     }
   }
 
+  acceptChallenge = (event) => {
+    axios({
+      method: 'PATCH',
+      url: `${apiUrl}/challenges/${event.currentTarget.value}`,
+      data: { challenge: { accepted: true } },
+      headers: {
+        Authorization: 'Bearer ' + this.props.user.token
+      }
+    })
+      .then(() => this.props.msgAlert({
+        heading: 'Game On!',
+
+        message: '',
+
+        variant: 'success'
+      }))
+      .catch(error => this.props.msgAlert({
+        heading: 'Failed with error: ' + error.message,
+
+        message: '',
+        variant: 'danger'
+      })
+      )
+  }
+
   // do this whenever MovieIndex is first shown on the page (mounted)
   componentDidMount () {
     axios({
@@ -60,7 +85,7 @@ class IncomingChallenges extends Component {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Accept Challenge</Button>
+          <Button size="small" value={challenge._id} onClick={this.acceptChallenge}>Accept Challenge</Button>
         </CardActions>
       </Card>
     )

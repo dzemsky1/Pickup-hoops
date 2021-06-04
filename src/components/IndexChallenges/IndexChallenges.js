@@ -67,7 +67,7 @@ class IndexChallenges extends Component {
 
     return (
       <div className="col-sm-10 col-md-8 mx-auto mt-5">
-        <Typography variant="h5">Pending Challenges</Typography>
+        <Typography variant="h5">Waiting on your Opponents to Respond</Typography>
         {pendingJsx}
       </div>
     )

@@ -34,14 +34,15 @@ class AcceptedChallenges extends Component {
       }
     })
       .then((res) => {
-        this.setState({ acceptedChallenges: res.data.challenges })
+        console.log('accepted res data', res.data)
+        this.setState({ challenges: res.data.challenges })
       })
       .catch(console.error)
   }
 
   render () {
     const { challenges } = this.state
-    // console.log('the challenges', challenges)
+    console.log('accepted challenges', challenges)
     // console.log('hm props', this.props)
 
     // if we haven't loaded any movies
