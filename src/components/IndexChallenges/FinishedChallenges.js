@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/card'
 import CardContent from '@material-ui/core/cardcontent'
 import CardActions from '@material-ui/core/cardactions'
-import Chip from '@material-ui/core/chip'
 
 class AcceptedChallenges extends Component {
   constructor (props) {
@@ -58,10 +57,13 @@ class AcceptedChallenges extends Component {
         margin: 24
       }}>
         <CardContent>
-          <Chip label={`${challenge.winner.name} Win!`} color="secondary" size="large"/>
-          <Typography variant="overline" component="overline">
-            {console.log('the challenge winner', challenge.winner.name)}
+          <Typography variant="h6" style={{
+            marginBottom: 32
+          }}>
             {challenge.hometeam.name} vs. {challenge.awayteam.name}
+          </Typography>
+          <Typography variant="body1">
+            {`${challenge.winner.name} Win!`}
           </Typography>
         </CardContent>
         <CardActions>

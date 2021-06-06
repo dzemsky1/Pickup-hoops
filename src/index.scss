@@ -9,6 +9,10 @@
 //   font-size: 2rem
 // }
 
+#level-form-control{
+  padding-right: 60px
+}
+
 .form-control{
   padding: 8px;
 border: none;
@@ -17,10 +21,11 @@ margin-bottom: 24px;
 border-radius: 100px;
 box-shadow: inset 2px 2px 5px 0 rgba(0, 0, 0, 0.1), inset -4px -4px 10px 0 rgba(255, 255, 255, 0.1);
 background-color: rgba(255, 255, 255, 0.2);
-color: rgba(255, 255, 255, 1);
+color: rgba(255, 255, 255, 0.7);
 &:focus{
   background-color: rgba(255, 255, 255, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.7)
   }
 }
 

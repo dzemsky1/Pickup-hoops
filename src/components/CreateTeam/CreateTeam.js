@@ -90,6 +90,7 @@ const CreateTeam = (props) => {
               value={team.level}
               placeholder="Level"
               onChange={handleChange}>
+              <option disabled selected value>-- Choose Level --</option>
               <option>Beginner</option>
               <option>Highschool</option>
               <option>College</option>

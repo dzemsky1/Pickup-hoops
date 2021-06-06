@@ -85,7 +85,8 @@ class IncomingChallenges extends Component {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" value={challenge._id} onClick={this.acceptChallenge}>Accept Challenge</Button>
+          <Button color="primary"
+            variant="contained" fullWidth value={challenge._id} onClick={this.acceptChallenge}>Accept Challenge</Button>
         </CardActions>
       </Card>
     )
@@ -93,7 +94,7 @@ class IncomingChallenges extends Component {
 
     return (
       <div className="col-sm-10 col-md-8 mx-auto mt-5">
-        <Typography variant="h5">Respond Now!</Typography>
+        <Typography variant="h5">Incoming Requests</Typography>
         {pendingJsx}
       </div>
     )

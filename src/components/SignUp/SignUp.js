@@ -39,7 +39,7 @@ class SignUp extends Component {
         message: messages.signUpSuccess,
         variant: 'success'
       }))
-      .then(() => history.push('/'))
+      .then(() => history.push('/opponents'))
       .catch(error => {
         this.setState({ email: '', password: '', passwordConfirmation: '' })
         msgAlert({
@@ -106,7 +106,7 @@ class SignUp extends Component {
               style={{
                 marginLeft: '6rem'
               }}>
-              Already a Member? Sign In!
+              Already a Member?
             </Link>
           </Card>
         </div>

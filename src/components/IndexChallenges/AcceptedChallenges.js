@@ -113,6 +113,7 @@ class AcceptedChallenges extends Component {
   render () {
     const { challenges } = this.state
     console.log('accepted challenges', challenges)
+    console.log('the user info', this.props.user)
     // console.log('hm props', this.props)
 
     // if we haven't loaded any movies
@@ -130,8 +131,13 @@ class AcceptedChallenges extends Component {
         margin: 24
       }}>
         <CardContent>
-          <Typography variant="h6" component="h2">
+          <Typography variant="h6" style={{
+            marginBottom: 32
+          }}>
             {challenge.hometeam.name} vs. {challenge.awayteam.name}
+          </Typography>
+          <Typography variant="body1">
+            Game on! Its {challenge.hometeam.owner} vs. {challenge.awayteam.owner} , please email eachother to coordinate a game!
           </Typography>
         </CardContent>
         <CardActions>

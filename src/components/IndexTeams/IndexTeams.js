@@ -114,15 +114,16 @@ class IndexTeams extends Component {
     const teamsJsx = teams.map(team => (
 
       <Card key={team._id} variant="outlined" style={{
-        margin: 24
+        margin: 24,
+        border: this.props.user.primaryTeam === team._id ? '2px solid #ffa502' : '0px solid #ffffff'
       }}>
         <CardContent>
           <Typography variant="h5" component="h2">
             {team.name}
           </Typography>
-          <Chip label={team.level} color="secondary" size="small"/>
-          <Chip label={`${team.wins} wins`} color="secondary" size="small"/>
-          <Chip label={`${team.losses} losses`} color="secondary" size="small"/>
+          <Chip label={team.level} color='secondary' size="medium"/>
+          <Chip label={`${team.wins} wins`} color="secondary" size="medium"/>
+          <Chip label={`${team.losses} losses`} color="secondary" size="medium"/>
           <Typography variant="body1" component="p">
             {team.members}
           </Typography>
@@ -130,7 +131,7 @@ class IndexTeams extends Component {
         <CardActions>
           <Button size="small" value={team._id} onClick={this.destroyTeam}>Remove Team</Button>
           <UpdateTeam className="update" teamname={team.name} members={team.members} value={team._id} name={this.props}/>
-          <Button size="small" value={team._id} onClick={this.setTeam}>Set as Primary</Button>
+          <Button size="small" value={team._id} onClick={this.setTeam}>{this.props.user.primaryTeam === team._id ? '' : 'SET AS PRIMARY TEAM'}</Button>
         </CardActions>
       </Card>
     )

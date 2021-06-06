@@ -93,7 +93,7 @@ class SignIn extends Component {
               style={{
                 marginLeft: '6rem'
               }}>
-              Already a Member? Sign In!
+              Need an Account?
             </Link>
           </Card>
         </div>

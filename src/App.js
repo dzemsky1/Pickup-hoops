@@ -14,17 +14,17 @@ import FinishedChallenges from './components/IndexChallenges/FinishedChallenges'
 
 import IndexTeams from './components/IndexTeams/IndexTeams'
 import OtherTeams from './components/OtherTeams/OtherTeams'
-import ResponsiveDrawer from './components/Drawer/ResponsiveDrawer'
+// import ResponsiveDrawer from './components/Drawer/ResponsiveDrawer'
 import SignUp from './components/SignUp/SignUp'
 import SignIn from './components/SignIn/SignIn'
 import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
 import Nav from 'react-bootstrap/Nav'
-import Button from '@material-ui/core/Button'
+// import Link from '@material-ui/core/Link'
+
 // import Checkbox from '@material-ui/core/Checkbox'
 // import FormControlLabel from '@material-ui/core/FormControlLabel'
 // import TextField from '@material-ui/core/TextField'
-// import AppBar from '@material-ui/core/AppBar'
 // import ToolBar from '@material-ui/core/ToolBar'
 // import IconButton from '@material-ui/core/IconButton'
 // import MenuIcon from '@material-ui/core/Menu'
@@ -61,12 +61,39 @@ function StyledDrawer () {
     variant="permanent"
     anchor="left"
     classes={{ paper: classes.drawerPaper }}
+    style={{
+      paddingTop: '90px'
+    }}
   >
-    <Typography variant="h6"> Challenges </Typography>
-    <Nav.Link href="#accepted">Accepted</Nav.Link>
-    <Nav.Link href="#pending">Pending</Nav.Link>
-    <Nav.Link href="#incoming">Incoming</Nav.Link>
-    <Nav.Link href="#finished">Finished</Nav.Link>
+    <Typography variant="h6" style={{
+      marginTop: '100px',
+      marginLeft: '24px'
+
+    }}> Challenges </Typography>
+    <Nav.Link href="#accepted" style={{
+      marginLeft: '24px',
+      marginTop: '16px',
+      color: '#ffa502',
+      fontWeight: 400
+    }}>Accepted</Nav.Link>
+    <Nav.Link href="#pending" style={{
+      marginLeft: '24px',
+      marginTop: '16px',
+      color: '#ffa502',
+      fontWeight: 400
+    }}>Pending</Nav.Link>
+    <Nav.Link href="#incoming" style={{
+      marginLeft: '24px',
+      marginTop: '16px',
+      color: '#ffa502',
+      fontWeight: 400
+    }}>Incoming</Nav.Link>
+    <Nav.Link href="#finished" style={{
+      marginLeft: '24px',
+      marginTop: '16px',
+      color: '#ffa502',
+      fontWeight: 400
+    }}>Finished</Nav.Link>
   </Drawer>
 }
 
@@ -116,6 +143,11 @@ class App extends Component {
         root: {
           backgroundColor: 'rgb(52, 54, 54)'
         }
+      },
+      MuiAppBar: {
+        root: {
+          backgroundColor: 'rgb(52, 54, 54)'
+        }
       }
     },
     display: 'flex'
@@ -159,7 +191,6 @@ class App extends Component {
         }}>
           <Grid container direction="column">
             <Header user={user} changeTheme={this.changeTheme}/>
-            <Button onClick={this.changeTheme}> Theme </Button>
             {msgAlerts.map(msgAlert => (
               <AutoDismissAlert
                 key={msgAlert.id}
@@ -190,26 +221,26 @@ class App extends Component {
               )} />
               <AuthenticatedRoute user={user} path='/accepted' render={() => (
                 <Fragment>
-                  <StyledDrawer/>
                   <AcceptedChallenges primaryTeam={this.primaryTeam} msgAlert={this.msgAlert} user={user} />
+                  <StyledDrawer/>
                 </Fragment>
               )} />
               <AuthenticatedRoute user={user} path='/pending' render={() => (
                 <Fragment>
-                  <StyledDrawer/>
                   <IndexChallenges msgAlert={this.msgAlert} user={user} />
+                  <StyledDrawer/>
                 </Fragment>
               )} />
               <AuthenticatedRoute user={user} path='/incoming' render={() => (
                 <Fragment>
-                  <StyledDrawer/>
                   <IncomingChallenges msgAlert={this.msgAlert} user={user} />
+                  <StyledDrawer/>
                 </Fragment>
               )} />
               <AuthenticatedRoute user={user} path='/finished' render={() => (
                 <Fragment>
-                  <ResponsiveDrawer/>
                   <FinishedChallenges msgAlert={this.msgAlert} user={user} />
+                  <StyledDrawer/>
                 </Fragment>
               )} />
               <AuthenticatedRoute user={user} path='/my-teams' render={() => (
