@@ -55,8 +55,8 @@ const CreateTeam = (props) => {
   //   return <Redirect to={`/teams/${createdTeamId}`} />
   // }
   return (
-    <div className="col-sm-10 col-md-8 mx-auto mt-5">
-      <Card variant="outlined" style={{
+    <div className="col-sm-10 col-md-6 mx-auto mt-5">
+      <Card style={{
         padding: 32
       }}>
         <Typography variant="h5">Create a Team</Typography>

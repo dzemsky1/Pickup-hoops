@@ -5,7 +5,10 @@ import { signIn } from '../../api/auth'
 import messages from '../AutoDismissAlert/messages'
 
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Card from '@material-ui/core/Card'
+import Link from '@material-ui/core/Link'
 
 class SignIn extends Component {
   constructor (props) {
@@ -33,7 +36,7 @@ class SignIn extends Component {
         message: messages.signInSuccess,
         variant: 'success'
       }))
-      .then(() => history.push('/'))
+      .then(() => history.push('/opponents'))
       .catch(error => {
         this.setState({ email: '', password: '' })
         msgAlert({
@@ -49,38 +52,50 @@ class SignIn extends Component {
 
     return (
       <div className="row">
-        <div className="col-sm-10 col-md-8 mx-auto mt-5">
-          <h3>Sign In</h3>
-          <Form onSubmit={this.onSignIn}>
-            <Form.Group controlId="email">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                required
-                type="email"
-                name="email"
-                value={email}
-                placeholder="Enter email"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                name="password"
-                value={password}
-                type="password"
-                placeholder="Password"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Button
-              variant="primary"
-              type="submit"
-            >
-              Submit
-            </Button>
-          </Form>
+        <div className="col-sm-10 col-md-6 mx-auto mt-5">
+          <Card>
+            <Typography variant="h5">Sign In</Typography>
+            <Form onSubmit={this.onSignIn}>
+              <Form.Group controlId="email">
+                <Form.Control
+                  required
+                  type="email"
+                  name="email"
+                  value={email}
+                  placeholder="Enter email"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="password">
+                <Form.Control
+                  required
+                  name="password"
+                  value={password}
+                  type="password"
+                  placeholder="Password"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+              <Button
+                color="primary"
+                variant="contained"
+                type="submit"
+                fullWidth
+                style={{
+                  marginTop: '102px',
+                  marginBottom: '30px'
+                }}
+              >
+                Sign In
+              </Button>
+            </Form>
+            <Link href="#/"
+              style={{
+                marginLeft: '6rem'
+              }}>
+              Already a Member? Sign In!
+            </Link>
+          </Card>
         </div>
       </div>
     )

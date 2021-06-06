@@ -14,6 +14,7 @@ import FinishedChallenges from './components/IndexChallenges/FinishedChallenges'
 
 import IndexTeams from './components/IndexTeams/IndexTeams'
 import OtherTeams from './components/OtherTeams/OtherTeams'
+import ResponsiveDrawer from './components/Drawer/ResponsiveDrawer'
 import SignUp from './components/SignUp/SignUp'
 import SignIn from './components/SignIn/SignIn'
 import SignOut from './components/SignOut/SignOut'
@@ -82,7 +83,40 @@ class App extends Component {
 
   theme = createMuiTheme({
     palette: {
-      type: 'dark'
+      type: 'dark',
+      primary: {
+        main: '#ffa502'
+      },
+      secondary: {
+        main: '#1ecbe1'
+      }
+    },
+    overrides: {
+      MuiButton: {
+        root: {
+          borderRadius: '100px',
+          border: '2px solid #333333'
+        },
+        contained: {
+          boxShadow: '3px 3px 0 #1ecbe1',
+          '&:hover': {
+            boxShadow: '1px 1px 0 #1ecbe1'
+          }
+        }
+      },
+      MuiCard: {
+        root: {
+          padding: '32px',
+          boxShadow: '12px 12px 16px 0 rgba(0, 0, 0, 0.16), -8px -8px 12px 0 rgba(94, 92, 92, 0.12)',
+          backgroundColor: 'rgb(52, 54, 54)',
+          borderRadius: '20px'
+        }
+      },
+      MuiPaper: {
+        root: {
+          backgroundColor: 'rgb(52, 54, 54)'
+        }
+      }
     },
     display: 'flex'
   })
@@ -120,7 +154,9 @@ class App extends Component {
 
     return (
       <ThemeProvider theme={this.theme}>
-        <Paper style={{ height: '500vh' }}>
+        <Paper style={{
+          height: '500vh'
+        }}>
           <Grid container direction="column">
             <Header user={user} changeTheme={this.changeTheme}/>
             <Button onClick={this.changeTheme}> Theme </Button>
@@ -135,8 +171,10 @@ class App extends Component {
               />
             ))}
             <main className="container">
-              <Route path='/sign-up' render={() => (
-                <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
+              <Route exact path='/' render={() => (
+                <Fragment>
+                  <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
+                </Fragment>
               )} />
               <Route path='/sign-in' render={() => (
                 <SignIn msgAlert={this.msgAlert} setUser={this.setUser} />
@@ -170,7 +208,7 @@ class App extends Component {
               )} />
               <AuthenticatedRoute user={user} path='/finished' render={() => (
                 <Fragment>
-                  <StyledDrawer/>
+                  <ResponsiveDrawer/>
                   <FinishedChallenges msgAlert={this.msgAlert} user={user} />
                 </Fragment>
               )} />
