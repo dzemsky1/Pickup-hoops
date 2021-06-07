@@ -20,6 +20,7 @@ import SignIn from './components/SignIn/SignIn'
 import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
 import Nav from 'react-bootstrap/Nav'
+// import Button from '@material-ui/core/Button'
 // import Link from '@material-ui/core/Link'
 
 // import Checkbox from '@material-ui/core/Checkbox'
@@ -103,12 +104,12 @@ class App extends Component {
     this.state = {
       user: null,
       msgAlerts: [],
-      theme: false,
+      theme: 'light',
       primaryTeam: null
     }
   }
 
-  theme = createMuiTheme({
+  darkTheme = createMuiTheme({
     palette: {
       type: 'dark',
       primary: {
@@ -152,26 +153,170 @@ class App extends Component {
     },
     display: 'flex'
   })
+  lightTheme = createMuiTheme({
+    palette: {
+      type: 'light',
+      primary: {
+        main: '#ffa502'
+      },
+      secondary: {
+        main: '#1ecbe1'
+      }
+    },
+    overrides: {
+      MuiButton: {
+        root: {
+          borderRadius: '100px',
+          border: '2px solid #333333'
+        },
+        contained: {
+          boxShadow: '3px 3px 0 #1ecbe1',
+          '&:hover': {
+            boxShadow: '1px 1px 0 #1ecbe1'
+          }
+        }
+      },
+      MuiCard: {
+        root: {
+          padding: '32px',
+          boxShadow: '12px 12px 16px 0 rgba(0, 0, 0, 0.16), -8px -8px 12px 0 rgba(94, 92, 92, 0.12)',
+          backgroundColor: 'rgb(245, 245, 245)',
+          borderRadius: '20px'
+        }
+      },
+      MuiPaper: {
+        root: {
+          backgroundColor: 'rgb(230, 230, 230)'
+        }
+      },
+      MuiAppBar: {
+        root: {
+          backgroundColor: 'rgb(51, 195, 214)'
+        }
+      }
+    },
+    display: 'flex'
+  })
+  weirdTheme = createMuiTheme({
+    palette: {
+      type: 'light',
+      primary: {
+        main: '#659DBD'
+      },
+      secondary: {
+        main: '#1ecbe1'
+      }
+    },
+    overrides: {
+      MuiButton: {
+        root: {
+          borderRadius: '4px',
+          border: '12px solid #FBEEC1'
+        },
+        contained: {
+          '&:hover': {
+            boxShadow: '1px 1px 0 #1ecbe1'
+          }
+        }
+      },
+      MuiCard: {
+        root: {
+          padding: '32px',
+          boxShadow: '12px 12px 16px 0 rgba(0, 0, 0, 0.16), -8px -8px 12px 0 rgba(94, 92, 92, 0.12)',
+          backgroundColor: '#BC986A',
+          borderRadius: '4px',
+          border: '6px solid #FBEEC1',
+          minWidth: '70vw',
+          marginLeft: '-400px'
+        }
+      },
+      MuiPaper: {
+        root: {
+          backgroundColor: '#659DBD'
+        }
+      },
+      MuiAppBar: {
+        root: {
+          backgroundColor: 'rgb(51, 195, 214)'
+        }
+      }
+    },
+    display: 'flex'
+  })
+  gradientTheme = createMuiTheme({
+    palette: {
+      type: 'dark',
+      primary: {
+        main: '#ffa502'
+      },
+      secondary: {
+        main: '#1ecbe1'
+      }
+    },
+    overrides: {
+      MuiButton: {
+        root: {
+          borderRadius: '100px',
+          border: '2px solid #333333',
+          backgroundImage: 'linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19)'
+        },
+        contained: {
+          boxShadow: '3px 3px 0 #1ecbe1',
+          '&:hover': {
+            boxShadow: '1px 1px 0 #1ecbe1'
+          }
+        }
+      },
+      MuiCard: {
+        root: {
+          padding: '32px',
+          boxShadow: '12px 12px 16px 0 rgba(0, 0, 0, 0.16), -8px -8px 12px 0 rgba(94, 92, 92, 0.12)',
+          backgroundColor: 'rgb(52, 54, 54)',
+          borderRadius: '20px'
+        }
+      },
+      MuiPaper: {
+        root: {
+          backgroundImage: 'linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673)'
+        }
+      },
+      MuiAppBar: {
+        root: {
+          backgroundColor: 'rgb(52, 54, 54)'
+        }
+      }
+    },
+    display: 'flex'
+  })
 
   setUser = user => this.setState({ user })
 
   clearUser = () => this.setState({ user: null })
 
-  // setDarkMode = darkmode => this.setState({ darkmode })
+  setDark = () => {
+    this.setState({ theme: 'dark' })
+  }
+
+  setLight = () => {
+    this.setState({ theme: 'light' })
+  }
+
+  setWeird = () => {
+    this.setState({ theme: 'weird' })
+  }
+
+  setGradient = () => {
+    this.setState({ theme: 'gradient' })
+  }
+
+  setPrimaryTeam = (team) => {
+    this.setState({ primaryTeam: team })
+  }
 
   deleteAlert = (id) => {
     this.setState((state) => {
       return { msgAlerts: state.msgAlerts.filter(msg => msg.id !== id) }
     })
-  }
-
-  changeTheme = () => {
-    console.log('the theme state', this.state.theme)
-    if (this.theme.palette.type === 'dark') {
-      this.theme.palette.type = 'light'
-    } else {
-      this.theme.palette.type = 'dark'
-    }
   }
 
   msgAlert = ({ heading, message, variant }) => {
@@ -182,15 +327,19 @@ class App extends Component {
   }
 
   render () {
-    const { msgAlerts, user } = this.state
+    const { msgAlerts, user, theme, primaryTeam } = this.state
 
     return (
-      <ThemeProvider theme={this.theme}>
+      <ThemeProvider theme=
+        {theme === 'dark' ? this.darkTheme
+          : theme === 'light' ? this.lightTheme
+            : theme === 'weird' ? this.weirdTheme
+              : this.gradientTheme}>
         <Paper style={{
           height: '500vh'
         }}>
           <Grid container direction="column">
-            <Header user={user} changeTheme={this.changeTheme}/>
+            <Header user={user} primaryTeam={primaryTeam} darkTheme={this.setDark} lightTheme={this.setLight} gradientTheme={this.setGradient} weirdTheme={this.setWeird}/>
             {msgAlerts.map(msgAlert => (
               <AutoDismissAlert
                 key={msgAlert.id}
@@ -246,7 +395,7 @@ class App extends Component {
               <AuthenticatedRoute user={user} path='/my-teams' render={() => (
                 <Fragment>
                   <CreateTeam msgAlert={this.msgAlert} user={user} />
-                  <IndexTeams msgAlert={this.msgAlert} setUser={this.setUser} user={user} />
+                  <IndexTeams setPrimaryTeam={this.setPrimaryTeam} msgAlert={this.msgAlert} setUser={this.setUser} user={user} />
                 </Fragment>
               )} />
             </main>

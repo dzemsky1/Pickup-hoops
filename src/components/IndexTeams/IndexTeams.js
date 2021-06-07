@@ -27,6 +27,7 @@ class IndexTeams extends Component {
   }
 
   setTeam = (event) => {
+    console.log('the event target returns', event.currentTarget)
     axios({
       method: 'PATCH',
       url: `${apiUrl}/users`,
@@ -45,6 +46,7 @@ class IndexTeams extends Component {
         }
       }))
       .then(res => this.props.setUser(res.data.user))
+      .then(this.props.setPrimaryTeam(event.currentTarget.value))
   }
 
   destroyTeam = (event) => {
@@ -131,7 +133,7 @@ class IndexTeams extends Component {
         <CardActions>
           <Button size="small" value={team._id} onClick={this.destroyTeam}>Remove Team</Button>
           <UpdateTeam className="update" teamname={team.name} members={team.members} value={team._id} name={this.props}/>
-          <Button size="small" value={team._id} onClick={this.setTeam}>{this.props.user.primaryTeam === team._id ? '' : 'SET AS PRIMARY TEAM'}</Button>
+          <Button size="small" label={team.name} value={team._id} onClick={this.setTeam}>{this.props.user.primaryTeam === team._id ? '' : 'SET AS PRIMARY TEAM'}</Button>
         </CardActions>
       </Card>
     )
